@@ -320,9 +320,41 @@ void ribbon() {
 
   // Ribbon 2
   int pres_ribbon_2 = analogRead(A2); 
-  int posi_ribbon_2 = analogRead(A3) + 24; // correct drift on this ribbon. 
+  int posi_ribbon_2 = analogRead(A3); // +24 to correct drift on this ribbon. 
   int velocity_2 = map(pres_ribbon_2, MIN_PRESSURE, MAX_PRESSURE, MIN_MIDI_VELOCITY, MAX_MIDI_VELOCITY);
-  int note_index_2 = map(posi_ribbon_2, MIN_POSITION, MAX_POSITION, 14, 28);
+  // int note_index_2 = map(posi_ribbon_2, MIN_POSITION, MAX_POSITION, 14, 28);
+  // can't use standard map on ribbon 2 because the sensor data doesn't quite match the precision of the other three sensors so using an if/else for the time being to map exactly where notes should be.
+  
+  int note_index_2 = 14;
+  if (posi_ribbon_2 >= 0 && posi_ribbon_2 <= 72 ) {
+    note_index_2 = 14;
+  } else if (posi_ribbon_2 >= 73 && posi_ribbon_2 <= 142) {
+    note_index_2 = 15;
+  } else if (posi_ribbon_2 >= 143 && posi_ribbon_2 <= 209) {
+    note_index_2 = 16;
+  } else if (posi_ribbon_2 >= 210 && posi_ribbon_2 <= 279) {
+    note_index_2 = 17;
+  } else if (posi_ribbon_2 >= 280 && posi_ribbon_2 <= 344) {
+    note_index_2 = 18;
+  } else if (posi_ribbon_2 >= 345 && posi_ribbon_2 <= 411) {
+    note_index_2 = 19;
+  } else if (posi_ribbon_2 >= 412 && posi_ribbon_2 <= 474) {
+    note_index_2 = 20;
+  } else if (posi_ribbon_2 >= 475 && posi_ribbon_2 <= 538) {
+    note_index_2 = 21;
+  } else if (posi_ribbon_2 >= 539 && posi_ribbon_2 <= 601) {
+    note_index_2 = 22;
+  } else if (posi_ribbon_2 >= 602 && posi_ribbon_2 <= 667) {
+    note_index_2 = 23;
+  } else if (posi_ribbon_2 >= 668 && posi_ribbon_2 <= 741) {
+    note_index_2 = 24;
+  } else if (posi_ribbon_2 >= 742 && posi_ribbon_2 <= 821) {
+    note_index_2 = 25;
+  } else if (posi_ribbon_2 >= 822 && posi_ribbon_2 <= 909) {
+    note_index_2 = 26;
+  } else if (posi_ribbon_2 >= 910 && posi_ribbon_2 <= 1023) {
+    note_index_2 = 27;
+  }
 
   if (velocity_2 > vel_threshhold) {
     int note_val_2 = note[sel_key][note_index_2];
